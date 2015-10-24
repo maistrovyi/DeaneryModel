@@ -72,6 +72,7 @@ public class Controller {
             usersDataStudents.clear();
             DBConnector.groupQuery(usersDataGroups);
             DBConnector.studentsQuery(usersDataStudents);
+            DBConnector.getConnection().close();
 
         } catch (SQLException e) {
             e.printStackTrace();
