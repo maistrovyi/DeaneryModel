@@ -12,12 +12,12 @@ public class DBConnector {
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/deanery", "root", "");
+
     }
 
     public static void groupQuery(ObservableList<GroupModel> dataContinerGroups) throws SQLException, ClassNotFoundException {
 
-        Statement statementGroups = null;
-        statementGroups = getConnection().createStatement();
+        Statement statementGroups = getConnection().createStatement();
         ResultSet resultGroups = statementGroups.executeQuery("SELECT * FROM groups where groupId > 0");
 
         while (resultGroups.next()) {
@@ -40,8 +40,7 @@ public class DBConnector {
 
     public static void studentsQuery(ObservableList<StudentModel> dataConatinerStudents) throws SQLException, ClassNotFoundException {
 
-        Statement statementStudents = null;
-        statementStudents = getConnection().createStatement();
+        Statement statementStudents = getConnection().createStatement();
         ResultSet resultStudents = statementStudents.executeQuery("SELECT * FROM students where studentId > 0");
 
         while (resultStudents.next()) {
