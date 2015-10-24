@@ -1,22 +1,45 @@
 package sample;
 
-import util.DBConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.GroupModel;
 import models.StudentModel;
+import util.DBConnector;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class Controller {
 
     @FXML
     public void closeAction() {
-        System.exit(0);
+        Alert alertClose = new Alert(Alert.AlertType.CONFIRMATION);
+        alertClose.setTitle("Confirmation Dialog");
+        alertClose.setHeaderText("Confirmation Dialog");
+        alertClose.setContentText("Exit?");
+
+        Optional<ButtonType> result = alertClose.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            System.exit(0);
+        } else {
+            return;
+        }
+    }
+
+    @FXML
+    public void helpAction() {
+        Alert alerHelp = new Alert(Alert.AlertType.INFORMATION);
+        alerHelp.setTitle("Information Dialog");
+        alerHelp.setHeaderText("Data Base Project ver 1.1");
+        alerHelp.setContentText("Outhor maystrovoy");
+
+        alerHelp.showAndWait();
     }
 
     private ObservableList<GroupModel> usersDataGroups = FXCollections.observableArrayList();
