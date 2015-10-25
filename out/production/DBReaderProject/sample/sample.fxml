@@ -1,79 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
-      prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="sample.Controller">
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <MenuBar>
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeAction" text="Close"/>
+                        <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeAction" text="Close" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem disable="true" mnemonicParsing="false" text="Delete"/>
+                        <MenuItem disable="true" mnemonicParsing="false" text="Delete" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About"/>
+                        <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" onAction="#helpAction" text="About" />
                     </items>
                 </Menu>
             </menus>
             <opaqueInsets>
-                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
             </opaqueInsets>
         </MenuBar>
         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="702.0" text="Students table">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font name="System Bold" size="14.0" />
             </font>
         </Label>
         <TableView fx:id="studentsTable" prefHeight="200.0" prefWidth="200.0">
             <columns>
-                <TableColumn fx:id="studentId" prefWidth="123.0" text="Number of student"/>
-                <TableColumn fx:id="studentName" prefWidth="119.0" text="Name of student"/>
-                <TableColumn fx:id="studentGroup" prefWidth="119.0" text="Number of group"/>
-                <TableColumn fx:id="numberOfGradebook" prefWidth="144.0" text="Number of gradebook"/>
-                <TableColumn fx:id="studentSex" prefWidth="94.0" text="Student sex"/>
+                <TableColumn fx:id="studentId" prefWidth="123.0" text="Number of student" />
+                <TableColumn fx:id="studentName" prefWidth="140.0" text="Name of student" />
+                <TableColumn fx:id="studentGroup" prefWidth="114.0" text="Number of group" />
+                <TableColumn fx:id="numberOfGradebook" prefWidth="140.0" text="Number of gradebook" />
+                <TableColumn fx:id="studentSex" prefWidth="82.0" text="Student sex" />
             </columns>
         </TableView>
         <Label alignment="CENTER" prefHeight="20.0" prefWidth="726.0" text="Groups table">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font name="System Bold" size="14.0" />
             </font>
         </Label>
         <TableView fx:id="groupsTable" prefHeight="200.0" prefWidth="200.0">
             <columns>
-                <TableColumn fx:id="groupId" prefWidth="129.0" text="Number of student"/>
-                <TableColumn fx:id="groupName" prefWidth="132.0" text="Name of the group"/>
-                <TableColumn fx:id="groupYearGraduate" prefWidth="159.0" text="Year of group graduate"/>
-                <TableColumn fx:id="villageElderId" prefWidth="118.0" text="Number of elder"/>
+                <TableColumn fx:id="groupId" prefWidth="129.0" text="Number of student" />
+                <TableColumn fx:id="groupName" prefWidth="132.0" text="Name of the group" />
+                <TableColumn fx:id="groupYearGraduate" prefWidth="159.0" text="Year of group graduate" />
+                <TableColumn fx:id="villageElderId" prefWidth="118.0" text="Number of elder" />
             </columns>
         </TableView>
         <HBox prefHeight="42.0" prefWidth="600.0">
             <children>
-                <Button fx:id="connectButton" alignment="CENTER" mnemonicParsing="false" onAction="#connectAction"
-                        prefHeight="35.0" prefWidth="92.0" text="Connect">
+                <Button fx:id="connectButton" alignment="CENTER" mnemonicParsing="false" onAction="#connectAction" prefHeight="35.0" prefWidth="92.0" text="Connect">
                     <effect>
-                        <Blend/>
+                        <Blend />
                     </effect>
                     <HBox.margin>
-                        <Insets bottom="3.0" top="4.0"/>
+                        <Insets bottom="3.0" top="4.0" />
                     </HBox.margin>
                 </Button>
             </children>
         </HBox>
     </children>
     <padding>
-        <Insets bottom="1.0" left="4.0" right="4.0" top="1.0"/>
+        <Insets bottom="1.0" left="4.0" right="4.0" top="1.0" />
     </padding>
 </VBox>

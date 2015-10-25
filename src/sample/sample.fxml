@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <MenuBar>
@@ -39,10 +38,10 @@
         <TableView fx:id="studentsTable" prefHeight="200.0" prefWidth="200.0">
             <columns>
                 <TableColumn fx:id="studentId" prefWidth="123.0" text="Number of student" />
-                <TableColumn fx:id="studentName" prefWidth="119.0" text="Name of student" />
-                <TableColumn fx:id="studentGroup" prefWidth="119.0" text="Number of group" />
-                <TableColumn fx:id="numberOfGradebook" prefWidth="144.0" text="Number of gradebook" />
-                <TableColumn fx:id="studentSex" prefWidth="94.0" text="Student sex" />
+                <TableColumn fx:id="studentName" prefWidth="140.0" text="Name of student" />
+                <TableColumn fx:id="studentGroup" prefWidth="114.0" text="Number of group" />
+                <TableColumn fx:id="numberOfGradebook" prefWidth="140.0" text="Number of gradebook" />
+                <TableColumn fx:id="studentSex" prefWidth="82.0" text="Student sex" />
             </columns>
         </TableView>
         <Label alignment="CENTER" prefHeight="20.0" prefWidth="726.0" text="Groups table">
