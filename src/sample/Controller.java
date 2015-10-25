@@ -84,8 +84,22 @@ public class Controller {
         numberOfGradebook.setCellValueFactory(new PropertyValueFactory<StudentModel, Integer>("numberOfGradebook"));
         studentSex.setCellValueFactory(new PropertyValueFactory<StudentModel, String>("studentSex"));
 
+        groupsTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            usersDataStudents.clear();
+            if (groupsTable.getSelectionModel().getSelectedItem() != null) {
+                try {
+                    DBConnector.getInstance().studentsQuery(usersDataStudents, groupsTable.getSelectionModel().getSelectedItem().getGroupId());
+                    studentsTable.setItems(usersDataStudents);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
         groupsTable.setItems(usersDataGroups);
-        studentsTable.setItems(usersDataStudents);
     }
 
     @FXML
@@ -94,8 +108,6 @@ public class Controller {
             usersDataGroups.clear();
             usersDataStudents.clear();
             DBConnector.getInstance().groupQuery(usersDataGroups);
-            DBConnector.getInstance().studentsQuery(usersDataStudents);
-            DBConnector.getInstance().closeConnection();
 
         } catch (SQLException e) {
             e.printStackTrace();

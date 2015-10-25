@@ -13,13 +13,13 @@ public class DBConnector {
     private Connection connection;
 
     public static DBConnector getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new DBConnector();
         }
         return instance;
     }
 
-    DBConnector(){
+    DBConnector() {
         try {
             openConnection();
         } catch (ClassNotFoundException e) {
@@ -31,10 +31,10 @@ public class DBConnector {
 
     public void openConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        connection =  DriverManager.getConnection("jdbc:mysql://localhost:3306/deanery", "root", "");
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/deanery", "root", "");
     }
 
-    public void closeConnection(){
+    public void closeConnection() {
 
         try {
             if (connection != null && !connection.isClosed()) {
@@ -73,10 +73,10 @@ public class DBConnector {
         return groupModel;
     }
 
-    public void studentsQuery(ObservableList<StudentModel> dataConatinerStudents) throws SQLException, ClassNotFoundException {
+    public void studentsQuery(ObservableList<StudentModel> dataConatinerStudents, int groupID) throws SQLException, ClassNotFoundException {
 
         Statement statementStudents = connection.createStatement();
-        ResultSet resultStudents = statementStudents.executeQuery("SELECT * FROM students where studentId > 0");
+        ResultSet resultStudents = statementStudents.executeQuery("SELECT * FROM students WHERE students.studentGroup = " + groupID);
 
         while (resultStudents.next()) {
             dataConatinerStudents.add(queryResultToStudent(resultStudents));
