@@ -8,6 +8,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import models.GroupModel;
 import models.StudentModel;
 import util.DBConnector;
@@ -23,6 +25,8 @@ public class Controller {
         alertClose.setTitle("Confirmation Dialog");
         alertClose.setHeaderText("Confirmation Dialog");
         alertClose.setContentText("Exit?");
+        Stage closeStage = (Stage) alertClose.getDialogPane().getScene().getWindow();
+        closeStage.getIcons().add(new Image(Main.iconPath));
 
         Optional<ButtonType> result = alertClose.showAndWait();
         if (result.get() == ButtonType.OK) {
@@ -38,6 +42,8 @@ public class Controller {
         alerHelp.setTitle("Information Dialog");
         alerHelp.setHeaderText("Data Base Project ver 1.1");
         alerHelp.setContentText("Outhor maystrovoy");
+        Stage helpStage = (Stage) alerHelp.getDialogPane().getScene().getWindow();
+        helpStage.getIcons().add(new Image(Main.iconPath));
 
         alerHelp.showAndWait();
     }
