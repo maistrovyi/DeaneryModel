@@ -8,16 +8,51 @@ import java.sql.*;
 
 public class DBConnector {
 
+    private static DBConnector instance;
 
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/deanery", "root", "");
+    private Connection connection;
 
+    public static DBConnector getInstance() {
+        if (instance == null){
+            instance = new DBConnector();
+        }
+        return instance;
     }
 
-    public static void groupQuery(ObservableList<GroupModel> dataContinerGroups) throws SQLException, ClassNotFoundException {
+    DBConnector(){
+        try {
+            openConnection();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        Statement statementGroups = getConnection().createStatement();
+    public void openConnection() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        connection =  DriverManager.getConnection("jdbc:mysql://localhost:3306/deanery", "root", "");
+    }
+
+    public void closeConnection(){
+
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    public static Connection getConnection() throws ClassNotFoundException, SQLException {
+//        Class.forName("com.mysql.jdbc.Driver");
+//        return DriverManager.getConnection("jdbc:mysql://localhost:3306/deanery", "root", "");
+//    }
+
+    public void groupQuery(ObservableList<GroupModel> dataContinerGroups) throws SQLException, ClassNotFoundException {
+
+        Statement statementGroups = connection.createStatement();
         ResultSet resultGroups = statementGroups.executeQuery("SELECT * FROM groups where groupId > 0");
 
         while (resultGroups.next()) {
@@ -25,7 +60,7 @@ public class DBConnector {
         }
     }
 
-    public static GroupModel queryResultToGroup(ResultSet resultSet) {
+    public GroupModel queryResultToGroup(ResultSet resultSet) {
         GroupModel groupModel = new GroupModel();
         try {
             groupModel.setGroupId(resultSet.getInt("groupId"));
@@ -38,9 +73,9 @@ public class DBConnector {
         return groupModel;
     }
 
-    public static void studentsQuery(ObservableList<StudentModel> dataConatinerStudents) throws SQLException, ClassNotFoundException {
+    public void studentsQuery(ObservableList<StudentModel> dataConatinerStudents) throws SQLException, ClassNotFoundException {
 
-        Statement statementStudents = getConnection().createStatement();
+        Statement statementStudents = connection.createStatement();
         ResultSet resultStudents = statementStudents.executeQuery("SELECT * FROM students where studentId > 0");
 
         while (resultStudents.next()) {
@@ -48,7 +83,7 @@ public class DBConnector {
         }
     }
 
-    public static StudentModel queryResultToStudent(ResultSet resultSet) {
+    public StudentModel queryResultToStudent(ResultSet resultSet) {
         StudentModel studentModel = new StudentModel();
         try {
             studentModel.setStudentId(resultSet.getInt("studentId"));

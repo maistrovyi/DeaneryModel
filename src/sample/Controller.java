@@ -26,10 +26,10 @@ public class Controller {
 
         Optional<ButtonType> result = alertClose.showAndWait();
         if (result.get() == ButtonType.OK) {
+            DBConnector.getInstance().closeConnection();
             System.exit(0);
-        } else {
-            return;
         }
+        return;
     }
 
     @FXML
@@ -93,9 +93,9 @@ public class Controller {
         try {
             usersDataGroups.clear();
             usersDataStudents.clear();
-            DBConnector.groupQuery(usersDataGroups);
-            DBConnector.studentsQuery(usersDataStudents);
-            DBConnector.getConnection().close();
+            DBConnector.getInstance().groupQuery(usersDataGroups);
+            DBConnector.getInstance().studentsQuery(usersDataStudents);
+            DBConnector.getInstance().closeConnection();
 
         } catch (SQLException e) {
             e.printStackTrace();
