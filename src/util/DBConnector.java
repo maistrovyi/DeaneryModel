@@ -45,10 +45,6 @@ public class DBConnector {
         }
     }
 
-//    public static Connection getConnection() throws ClassNotFoundException, SQLException {
-//        Class.forName("com.mysql.jdbc.Driver");
-//        return DriverManager.getConnection("jdbc:mysql://localhost:3306/deanery", "root", "");
-//    }
 
     public void groupQuery(ObservableList<GroupModel> dataContinerGroups) throws SQLException, ClassNotFoundException {
 
