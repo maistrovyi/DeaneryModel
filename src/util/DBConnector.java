@@ -69,10 +69,10 @@ public class DBConnector {
         return groupModel;
     }
 
-    public void studentsQuery(ObservableList<StudentModel> dataConatinerStudents, int groupID) throws SQLException, ClassNotFoundException {
+    public void studentsQuery(ObservableList<StudentModel> dataConatinerStudents, int groupId) throws SQLException, ClassNotFoundException {
 
         Statement statementStudents = connection.createStatement();
-        ResultSet resultStudents = statementStudents.executeQuery("SELECT * FROM students WHERE students.studentGroup = " + groupID);
+        ResultSet resultStudents = statementStudents.executeQuery("SELECT * FROM students WHERE students.studentGroup = " + groupId);
 
         while (resultStudents.next()) {
             dataConatinerStudents.add(queryResultToStudent(resultStudents));

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <MenuBar>
@@ -67,6 +73,14 @@
                         <Insets bottom="3.0" top="4.0" />
                     </HBox.margin>
                 </Button>
+            <Button fx:id="removeButton" alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="92.0" text="Remove">
+               <effect>
+                  <Blend />
+               </effect>
+               <HBox.margin>
+                  <Insets bottom="3.0" left="4.0" top="4.0" />
+               </HBox.margin>
+            </Button>
             </children>
         </HBox>
     </children>
