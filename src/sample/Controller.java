@@ -115,6 +115,7 @@ public class Controller {
             usersDataStudents.clear();
             DBConnector.getInstance().groupQuery(usersDataGroups);
 
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
