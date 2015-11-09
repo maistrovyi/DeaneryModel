@@ -3,10 +3,7 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -79,10 +76,14 @@ public class Controller {
 
     @FXML
     private void initialize() {
+//        groupsTable.setEditable(true);
+
         groupId.setCellValueFactory(new PropertyValueFactory<GroupModel, Integer>("groupId"));
         groupName.setCellValueFactory(new PropertyValueFactory<GroupModel, String>("groupName"));
         groupYearGraduate.setCellValueFactory(new PropertyValueFactory<GroupModel, Integer>("groupYearGraduate"));
         villageElderId.setCellValueFactory(new PropertyValueFactory<GroupModel, Integer>("villageElderId"));
+
+//        studentsTable.setEditable(true);
 
         studentId.setCellValueFactory(new PropertyValueFactory<StudentModel, Integer>("studentId"));
         studentName.setCellValueFactory(new PropertyValueFactory<StudentModel, String>("studentName"));
