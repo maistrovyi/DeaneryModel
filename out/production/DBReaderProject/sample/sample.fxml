@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <MenuBar>
             <menus>
@@ -36,33 +36,91 @@
                 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
             </opaqueInsets>
         </MenuBar>
-        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="702.0" text="Groups table">
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="651.0" text="Groups table">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <TableView fx:id="groupsTable" prefHeight="200.0" prefWidth="200.0">
-            <columns>
-                <TableColumn fx:id="groupId" prefWidth="129.0" text="Number of group" />
-                <TableColumn fx:id="groupName" prefWidth="132.0" text="Name of the group" />
-                <TableColumn fx:id="groupYearGraduate" prefWidth="159.0" text="Year of group graduate" />
-                <TableColumn fx:id="villageElderId" prefWidth="118.0" text="Number of elder" />
-            </columns>
-        </TableView>
-        <Label alignment="CENTER" prefHeight="20.0" prefWidth="726.0" text="Students table">
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+              <TableView fx:id="groupsTable" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="650.0">
+                  <columns>
+                      <TableColumn fx:id="groupId" prefWidth="129.0" text="Number of group" />
+                      <TableColumn fx:id="groupName" prefWidth="132.0" text="Name of the group" />
+                      <TableColumn fx:id="groupYearGraduate" prefWidth="159.0" text="Year of group graduate" />
+                      <TableColumn fx:id="villageElderId" prefWidth="118.0" text="Number of elder" />
+                  </columns>
+              </TableView>
+            <VBox prefHeight="339.0" prefWidth="192.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="TOP" prefHeight="37.0" prefWidth="197.0" text="Search by name" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="searchByNameField" prefHeight="25.0" prefWidth="48.0">
+                     <VBox.margin>
+                        <Insets left="5.0" right="2.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button fx:id="searchNameButton" mnemonicParsing="false" onAction="#searchByNameAction" prefHeight="25.0" prefWidth="110.0" text="Search">
+                     <VBox.margin>
+                        <Insets left="45.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+        <Label alignment="CENTER" prefHeight="20.0" prefWidth="650.0" text="Students table">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-      <TableView fx:id="studentsTable" prefHeight="200.0" prefWidth="200.0">
-         <columns>
-            <TableColumn fx:id="studentId" prefWidth="123.0" text="Number of student" />
-            <TableColumn fx:id="studentName" prefWidth="140.0" text="Name of student" />
-            <TableColumn fx:id="studentGroup" prefWidth="114.0" text="Number of group" />
-            <TableColumn fx:id="numberOfGradebook" prefWidth="140.0" text="Number of gradebook" />
-            <TableColumn fx:id="studentSex" prefWidth="82.0" text="Student sex" />
-         </columns>
-      </TableView>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <TableView fx:id="studentsTable" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="650.0">
+               <columns>
+                  <TableColumn fx:id="studentId" prefWidth="123.0" text="Number of student" />
+                  <TableColumn fx:id="studentName" prefWidth="140.0" text="Name of student" />
+                  <TableColumn fx:id="studentGroup" prefWidth="114.0" text="Number of group" />
+                  <TableColumn fx:id="numberOfGradebook" prefWidth="140.0" text="Number of gradebook" />
+                  <TableColumn fx:id="studentSex" prefWidth="82.0" text="Student sex" />
+               </columns>
+            </TableView>
+            <VBox prefHeight="200.0" prefWidth="229.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="TOP" prefHeight="37.0" prefWidth="197.0" text="Search by group" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="groupNameField" prefHeight="25.0" prefWidth="48.0">
+                     <VBox.margin>
+                        <Insets left="5.0" right="2.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button fx:id="searchGroupButton" mnemonicParsing="false" onAction="#searchByGroupAction" prefHeight="25.0" prefWidth="110.0" text="Search">
+                     <VBox.margin>
+                        <Insets left="45.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
         <HBox prefHeight="42.0" prefWidth="600.0">
             <children>
                 <Button fx:id="connectButton" alignment="CENTER" mnemonicParsing="false" onAction="#connectAction" prefHeight="35.0" prefWidth="92.0" text="Connect">
@@ -73,7 +131,7 @@
                         <Insets bottom="3.0" top="4.0" />
                     </HBox.margin>
                 </Button>
-            <Button fx:id="removeButton" alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="92.0" text="Remove">
+            <Button fx:id="addButton" alignment="CENTER" disable="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="92.0" text="Add">
                <effect>
                   <Blend />
                </effect>
