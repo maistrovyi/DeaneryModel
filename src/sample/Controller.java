@@ -88,20 +88,29 @@ public class Controller {
         studentSex.setCellValueFactory(new PropertyValueFactory<StudentModel, String>("studentSex"));
 
         groupsTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-            usersDataStudents.clear();
-            if (groupsTable.getSelectionModel().getSelectedItem() != null) {
-                try {
-                    DBConnector.getInstance().studentsQuery(usersDataStudents, groupsTable.getSelectionModel().getSelectedItem().getGroupId());
-                    studentsTable.setItems(usersDataStudents);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-
+            retrieveStudents();
         });
         groupsTable.setItems(usersDataGroups);
+
+
+    }
+
+    private void retrieveStudents() {
+        usersDataStudents.clear();
+        if (groupsTable.getSelectionModel().getSelectedItem() != null) {
+            studentsRequire(groupsTable.getSelectionModel().getSelectedItem().getGroupId());
+        }
+    }
+
+    private void studentsRequire(int id) {
+        try {
+            DBConnector.getInstance().studentsQuery(usersDataStudents, id );
+            studentsTable.setItems(usersDataStudents);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -111,15 +120,23 @@ public class Controller {
     public void searchByNameAction() {
         try {
             String name = searchByNameField.getText();
-            usersDataGroups.clear();
-            usersDataStudents.clear();
-            DBConnector.getInstance().villageElderQuery(usersDataStudents, name);
-            studentsTable.setItems(usersDataStudents);
-
-
+            getStudentsByName(name);
+            getGroupByName(name);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void getStudentsByName(String name) throws SQLException {
+        usersDataStudents.clear();
+        DBConnector.getInstance().studentsOfGroupByVillageElderNameQuery(usersDataStudents, name);
+        studentsTable.setItems(usersDataStudents);
+    }
+
+    private void getGroupByName(String name) throws SQLException {
+        usersDataGroups.clear();
+        DBConnector.getInstance().getGroupIdByVillageElderName(usersDataGroups, name);
+        groupsTable.setItems(usersDataGroups);
     }
 
     @FXML
@@ -133,6 +150,7 @@ public class Controller {
             usersDataStudents.clear();
             DBConnector.getInstance().groupNameQuery(usersDataGroups, group);
             groupsTable.setItems(usersDataGroups);
+            studentsRequire(usersDataGroups.get(0).getGroupId());
 
         } catch (SQLException e) {
             e.printStackTrace();

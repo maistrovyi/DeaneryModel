@@ -79,7 +79,7 @@ public class DBConnector {
         }
     }
 
-    public void villageElderQuery(ObservableList<StudentModel> dataConatinerStudents, String name) throws SQLException {
+    public void studentsOfGroupByVillageElderNameQuery(ObservableList<StudentModel> dataContainerStudents, String name) throws SQLException {
         Statement statementVillageElder = connection.createStatement();
         ResultSet resultVillageElder = statementVillageElder.executeQuery("SELECT studentName, studentId, numberOfGradebook, studentGroup, studentSex\n" +
                 "FROM students\n" +
@@ -88,7 +88,17 @@ public class DBConnector {
                 "                                        (SELECT studentId FROM students WHERE studentName = \"" + name + "\"))");
 
         while (resultVillageElder.next()) {
-            dataConatinerStudents.add(queryResultToStudent(resultVillageElder));
+            dataContainerStudents.add(queryResultToStudent(resultVillageElder));
+        }
+    }
+
+    public void getGroupIdByVillageElderName(ObservableList<GroupModel> dataContainerGroups, String name) throws SQLException {
+        Statement statementVillageElder = connection.createStatement();
+        ResultSet resultVillageElder = statementVillageElder.executeQuery("SELECT * FROM groups WHERE villageElderId =\n" +
+                "                                        (SELECT studentId FROM students WHERE studentName = \"" + name + "\")");
+
+        while (resultVillageElder.next()) {
+            dataContainerGroups.add(queryResultToGroup(resultVillageElder));
         }
     }
 
@@ -116,6 +126,3 @@ public class DBConnector {
     }
 
 }
-
-
-
