@@ -46,13 +46,13 @@ public class DBConnector {
     }
 
 
-    public void groupQuery(ObservableList<GroupModel> dataContinerGroups) throws SQLException, ClassNotFoundException {
+    public void groupQuery(ObservableList<GroupModel> dataContainerGroups) throws SQLException, ClassNotFoundException {
 
         Statement statementGroups = connection.createStatement();
         ResultSet resultGroups = statementGroups.executeQuery("SELECT * FROM groups");
 
         while (resultGroups.next()) {
-            dataContinerGroups.add(queryResultToGroup(resultGroups));
+            dataContainerGroups.add(queryResultToGroup(resultGroups));
         }
     }
 
@@ -69,13 +69,13 @@ public class DBConnector {
         return groupModel;
     }
 
-    public void studentsQuery(ObservableList<StudentModel> dataConatinerStudents, int groupId) throws SQLException, ClassNotFoundException {
+    public void studentsQuery(ObservableList<StudentModel> dataContainerStudents, int groupId) throws SQLException, ClassNotFoundException {
 
         Statement statementStudents = connection.createStatement();
         ResultSet resultStudents = statementStudents.executeQuery("SELECT studentName, studentId, numberOfGradebook, studentGroup, studentSex FROM students WHERE students.studentGroup = " + groupId);
 
         while (resultStudents.next()) {
-            dataConatinerStudents.add(queryResultToStudent(resultStudents));
+            dataContainerStudents.add(queryResultToStudent(resultStudents));
         }
     }
 

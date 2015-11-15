@@ -18,14 +18,7 @@ public class Controller {
 
     @FXML
     public void closeAction() {
-        Alert alertClose = new Alert(Alert.AlertType.CONFIRMATION);
-        alertClose.setTitle("Confirmation Dialog");
-        alertClose.setHeaderText("Confirmation Dialog");
-        alertClose.setContentText("Exit?");
-        Stage closeStage = (Stage) alertClose.getDialogPane().getScene().getWindow();
-        closeStage.getIcons().add(new Image(Main.iconPath));
-
-        Optional<ButtonType> result = alertClose.showAndWait();
+        Optional<ButtonType> result = showDialog(Alert.AlertType.CONFIRMATION, "Confirmation Dialog","Confirmation Dialog","Exit?" );
         if (result.get() == ButtonType.OK) {
             DBConnector.getInstance().closeConnection();
             System.exit(0);
@@ -35,14 +28,18 @@ public class Controller {
 
     @FXML
     public void helpAction() {
-        Alert alerHelp = new Alert(Alert.AlertType.INFORMATION);
-        alerHelp.setTitle("Information Dialog");
-        alerHelp.setHeaderText("Data Base Project ver 1.1");
-        alerHelp.setContentText("Outhor maystrovoy");
+        showDialog(Alert.AlertType.INFORMATION, "Information Dialog", "Data Base Project ver 1.1", "Outhor maystrovoy");
+    }
+
+    public static Optional<ButtonType> showDialog(Alert.AlertType information, String title, String headerText, String contentText) {
+        Alert alerHelp = new Alert(information);
+        alerHelp.setTitle(title);
+        alerHelp.setHeaderText(headerText);
+        alerHelp.setContentText(contentText);
         Stage helpStage = (Stage) alerHelp.getDialogPane().getScene().getWindow();
         helpStage.getIcons().add(new Image(Main.iconPath));
 
-        alerHelp.showAndWait();
+        return alerHelp.showAndWait();
     }
 
     private ObservableList<GroupModel> usersDataGroups = FXCollections.observableArrayList();
@@ -130,7 +127,11 @@ public class Controller {
     private void getStudentsByName(String name) throws SQLException {
         usersDataStudents.clear();
         DBConnector.getInstance().studentsOfGroupByVillageElderNameQuery(usersDataStudents, name);
-        studentsTable.setItems(usersDataStudents);
+        if (usersDataStudents.isEmpty()) {
+            showDialog(Alert.AlertType.ERROR, "Error", "Test", "Test1");
+        } else {
+            studentsTable.setItems(usersDataStudents);
+        }
     }
 
     private void getGroupByName(String name) throws SQLException {
@@ -150,7 +151,11 @@ public class Controller {
             usersDataStudents.clear();
             DBConnector.getInstance().groupNameQuery(usersDataGroups, group);
             groupsTable.setItems(usersDataGroups);
-            studentsRequire(usersDataGroups.get(0).getGroupId());
+            if (!usersDataGroups.isEmpty()) {
+                studentsRequire(usersDataGroups.get(0).getGroupId());
+            }else{
+                showDialog(Alert.AlertType.ERROR, "Error", "Test", "Test1");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
