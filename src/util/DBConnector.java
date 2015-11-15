@@ -49,7 +49,7 @@ public class DBConnector {
     public void groupQuery(ObservableList<GroupModel> dataContinerGroups) throws SQLException, ClassNotFoundException {
 
         Statement statementGroups = connection.createStatement();
-        ResultSet resultGroups = statementGroups.executeQuery("SELECT * FROM groups where groupId > 0");
+        ResultSet resultGroups = statementGroups.executeQuery("SELECT * FROM groups");
 
         while (resultGroups.next()) {
             dataContinerGroups.add(queryResultToGroup(resultGroups));
@@ -72,10 +72,32 @@ public class DBConnector {
     public void studentsQuery(ObservableList<StudentModel> dataConatinerStudents, int groupId) throws SQLException, ClassNotFoundException {
 
         Statement statementStudents = connection.createStatement();
-        ResultSet resultStudents = statementStudents.executeQuery("SELECT * FROM students WHERE students.studentGroup = " + groupId);
+        ResultSet resultStudents = statementStudents.executeQuery("SELECT studentName, studentId, numberOfGradebook, studentGroup, studentSex FROM students WHERE students.studentGroup = " + groupId);
 
         while (resultStudents.next()) {
             dataConatinerStudents.add(queryResultToStudent(resultStudents));
+        }
+    }
+
+    public void villageElderQuery(ObservableList<StudentModel> dataConatinerStudents, String name) throws SQLException {
+        Statement statementVillageElder = connection.createStatement();
+        ResultSet resultVillageElder = statementVillageElder.executeQuery("SELECT studentName, studentId, numberOfGradebook, studentGroup, studentSex\n" +
+                "FROM students\n" +
+                "WHERE studentGroup =\n" +
+                "        (SELECT groupId FROM groups WHERE villageElderId =\n" +
+                "                                        (SELECT studentId FROM students WHERE studentName = \"" + name + "\"))");
+
+        while (resultVillageElder.next()) {
+            dataConatinerStudents.add(queryResultToStudent(resultVillageElder));
+        }
+    }
+
+    public void groupNameQuery(ObservableList<GroupModel> dataContinerGroups, String group) throws SQLException {
+        Statement statementGroupName = connection.createStatement();
+        ResultSet resultGroupName = statementGroupName.executeQuery("SELECT * FROM groups WHERE groupName = \"" + group +"\"");
+
+        while (resultGroupName.next()) {
+            dataContinerGroups.add(queryResultToGroup(resultGroupName));
         }
     }
 
