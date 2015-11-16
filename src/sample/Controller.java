@@ -1,5 +1,6 @@
 package sample;
 
+import interfaces.AlertDialogConstants;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,11 +15,11 @@ import util.DBConnector;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class Controller {
+public class Controller implements AlertDialogConstants {
 
     @FXML
     public void closeAction() {
-        Optional<ButtonType> result = showDialog(Alert.AlertType.CONFIRMATION, "Confirmation Dialog","Confirmation Dialog","Exit?" );
+        Optional<ButtonType> result = showDialog(Alert.AlertType.CONFIRMATION, AlertDialogConstants.alertConfirmation,"Confirmation Dialog","Exit?" );
         if (result.get() == ButtonType.OK) {
             DBConnector.getInstance().closeConnection();
             System.exit(0);
@@ -32,14 +33,14 @@ public class Controller {
     }
 
     public static Optional<ButtonType> showDialog(Alert.AlertType information, String title, String headerText, String contentText) {
-        Alert alerHelp = new Alert(information);
-        alerHelp.setTitle(title);
-        alerHelp.setHeaderText(headerText);
-        alerHelp.setContentText(contentText);
-        Stage helpStage = (Stage) alerHelp.getDialogPane().getScene().getWindow();
+        Alert alert = new Alert(information);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        Stage helpStage = (Stage) alert.getDialogPane().getScene().getWindow();
         helpStage.getIcons().add(new Image(Main.iconPath));
 
-        return alerHelp.showAndWait();
+        return alert.showAndWait();
     }
 
     private ObservableList<GroupModel> usersDataGroups = FXCollections.observableArrayList();
@@ -70,6 +71,11 @@ public class Controller {
     private TableColumn<StudentModel, Integer> numberOfGradebook = new TableColumn();
     @FXML
     private TableColumn<StudentModel, String> studentSex = new TableColumn();
+
+    @FXML
+    public TextField searchByNameField;
+    @FXML
+    public TextField searchByGroupNameField;
 
     @FXML
     private void initialize() {
@@ -111,12 +117,10 @@ public class Controller {
     }
 
     @FXML
-    public TextField searchByNameField;
-
-    @FXML
     public void searchByNameAction() {
         try {
             String name = searchByNameField.getText();
+            searchByGroupNameField.clear();
             getStudentsByName(name);
             getGroupByName(name);
         } catch (SQLException e) {
@@ -128,7 +132,10 @@ public class Controller {
         usersDataStudents.clear();
         DBConnector.getInstance().studentsOfGroupByVillageElderNameQuery(usersDataStudents, name);
         if (usersDataStudents.isEmpty()) {
-            showDialog(Alert.AlertType.ERROR, "Error", "Test", "Test1");
+            Optional<ButtonType> result = showDialog(Alert.AlertType.ERROR, AlertDialogConstants.alertError, "Description:", "The elder " + name + " is not found! \nPlease, input correct name!");
+            if (result.get() == ButtonType.OK) {
+                searchByNameField.requestFocus();
+            }
         } else {
             studentsTable.setItems(usersDataStudents);
         }
@@ -141,12 +148,10 @@ public class Controller {
     }
 
     @FXML
-    public TextField groupNameField;
-
-    @FXML
     public void searchByGroupAction() {
         try {
-            String group = groupNameField.getText().trim();
+            String group = searchByGroupNameField.getText();
+            searchByNameField.clear();
             usersDataGroups.clear();
             usersDataStudents.clear();
             DBConnector.getInstance().groupNameQuery(usersDataGroups, group);
@@ -154,9 +159,11 @@ public class Controller {
             if (!usersDataGroups.isEmpty()) {
                 studentsRequire(usersDataGroups.get(0).getGroupId());
             }else{
-                showDialog(Alert.AlertType.ERROR, "Error", "Test", "Test1");
+                Optional<ButtonType> result = showDialog(Alert.AlertType.ERROR, AlertDialogConstants.alertError, "Description:", "The group " + group + " is not found! \nPlease, input correct group!");
+                if (result.get() == ButtonType.OK) {
+                    searchByGroupNameField.requestFocus();
+                }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -168,8 +175,8 @@ public class Controller {
             usersDataGroups.clear();
             usersDataStudents.clear();
             DBConnector.getInstance().groupQuery(usersDataGroups);
-
-
+            searchByGroupNameField.clear();
+            searchByNameField.clear();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
