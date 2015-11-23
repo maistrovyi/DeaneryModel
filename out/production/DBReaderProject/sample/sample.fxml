@@ -107,7 +107,7 @@
                         <Insets top="40.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="groupNameField" prefHeight="25.0" prefWidth="48.0">
+                  <TextField fx:id="searchByGroupNameField" prefHeight="25.0" prefWidth="48.0">
                      <VBox.margin>
                         <Insets left="5.0" right="2.0" top="10.0" />
                      </VBox.margin>
