@@ -27,7 +27,6 @@ public class GroupModel {
     }
 
     public int getGroupId() {
-
         return groupId;
     }
 
@@ -36,7 +35,6 @@ public class GroupModel {
     }
 
     public String getGroupName() {
-
         return groupName;
     }
 

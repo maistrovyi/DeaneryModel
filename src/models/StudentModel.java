@@ -12,7 +12,6 @@ public class StudentModel {
 
     private String studentSex;
 
-
     public String getStudentSex() {
         return studentSex;
     }
@@ -22,7 +21,6 @@ public class StudentModel {
     }
 
     public int getNumberOfGradebook() {
-
         return numberOfGradebook;
     }
 
@@ -31,7 +29,6 @@ public class StudentModel {
     }
 
     public int getStudentGroup() {
-
         return studentGroup;
     }
 
@@ -40,7 +37,6 @@ public class StudentModel {
     }
 
     public String getStudentName() {
-
         return studentName;
     }
 
@@ -49,12 +45,10 @@ public class StudentModel {
     }
 
     public int getStudentId() {
-
         return studentId;
     }
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
-
 }

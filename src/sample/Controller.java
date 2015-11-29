@@ -29,7 +29,7 @@ public class Controller implements AlertDialogConstants {
 
     @FXML
     public void helpAction() {
-        showDialog(Alert.AlertType.INFORMATION, "Information Dialog", "Data Base Project ver 1.1", "Outhor maystrovoy");
+        showDialog(Alert.AlertType.INFORMATION, "Information Dialog", "Data Base Project ver 1.2", "Author maystrovoy");
     }
 
     public static Optional<ButtonType> showDialog(Alert.AlertType information, String title, String headerText, String contentText) {
@@ -44,8 +44,10 @@ public class Controller implements AlertDialogConstants {
     }
 
     private ObservableList<GroupModel> usersDataGroups = FXCollections.observableArrayList();
-
     private ObservableList<StudentModel> usersDataStudents = FXCollections.observableArrayList();
+
+    private ObservableList<String> dataElders = FXCollections.observableArrayList();
+    private ObservableList<String> dataGroups = FXCollections.observableArrayList();
 
     @FXML
     private TableView<GroupModel> groupsTable;
@@ -77,8 +79,17 @@ public class Controller implements AlertDialogConstants {
     @FXML
     public ComboBox searchByGroupNameField;
 
+    public void fillingComboBoxFields() throws SQLException, ClassNotFoundException {
+        DBConnector.getInstance().namesOfGroupsQuery(dataGroups);
+        DBConnector.getInstance().namesOfEldersQuery(dataElders);
+
+        searchByNameField.getItems().addAll(dataElders);
+        searchByGroupNameField.getItems().addAll(dataGroups);
+    }
+
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException, ClassNotFoundException {
+        fillingComboBoxFields();
         groupId.setCellValueFactory(new PropertyValueFactory<GroupModel, Integer>("groupId"));
         groupName.setCellValueFactory(new PropertyValueFactory<GroupModel, String>("groupName"));
         groupYearGraduate.setCellValueFactory(new PropertyValueFactory<GroupModel, Integer>("groupYearGraduate"));
