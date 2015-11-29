@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
@@ -64,11 +61,14 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="searchByNameField" prefHeight="25.0" prefWidth="48.0">
+                  <ComboBox fx:id="searchByNameField" editable="true" prefWidth="170.0" promptText="Input full name">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                      <VBox.margin>
-                        <Insets left="5.0" right="2.0" top="10.0" />
+                        <Insets left="11.0" />
                      </VBox.margin>
-                  </TextField>
+                  </ComboBox>
                   <Button fx:id="searchNameButton" mnemonicParsing="false" onAction="#searchByNameAction" prefHeight="25.0" prefWidth="110.0" text="Search">
                      <VBox.margin>
                         <Insets left="45.0" top="10.0" />
@@ -91,7 +91,7 @@
                   <TableColumn fx:id="studentName" prefWidth="140.0" text="Name of student" />
                   <TableColumn fx:id="studentGroup" prefWidth="114.0" text="Number of group" />
                   <TableColumn fx:id="numberOfGradebook" prefWidth="140.0" text="Number of gradebook" />
-                  <TableColumn fx:id="studentSex" prefWidth="82.0" text="Student sex" />
+                  <TableColumn fx:id="studentSex" prefWidth="82.0" text="Sex" />
                </columns>
             </TableView>
             <VBox prefHeight="200.0" prefWidth="229.0">
@@ -107,11 +107,11 @@
                         <Insets top="40.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="searchByGroupNameField" prefHeight="25.0" prefWidth="48.0">
+                  <ComboBox fx:id="searchByGroupNameField" editable="true" prefWidth="170.0" promptText="Input group name">
                      <VBox.margin>
-                        <Insets left="5.0" right="2.0" top="10.0" />
+                        <Insets left="11.0" />
                      </VBox.margin>
-                  </TextField>
+                  </ComboBox>
                   <Button fx:id="searchGroupButton" mnemonicParsing="false" onAction="#searchByGroupAction" prefHeight="25.0" prefWidth="110.0" text="Search">
                      <VBox.margin>
                         <Insets left="45.0" top="10.0" />
@@ -131,7 +131,7 @@
                         <Insets bottom="3.0" top="4.0" />
                     </HBox.margin>
                 </Button>
-            <Button fx:id="addButton" alignment="CENTER" disable="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="92.0" text="Add">
+            <Button fx:id="addButton" alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="92.0" text="Add">
                <effect>
                   <Blend />
                </effect>

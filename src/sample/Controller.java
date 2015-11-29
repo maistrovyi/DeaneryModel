@@ -73,9 +73,9 @@ public class Controller implements AlertDialogConstants {
     private TableColumn<StudentModel, String> studentSex = new TableColumn();
 
     @FXML
-    public TextField searchByNameField;
+    public ComboBox searchByNameField;
     @FXML
-    public TextField searchByGroupNameField;
+    public ComboBox searchByGroupNameField;
 
     @FXML
     private void initialize() {
@@ -94,8 +94,6 @@ public class Controller implements AlertDialogConstants {
             retrieveStudents();
         });
         groupsTable.setItems(usersDataGroups);
-
-
     }
 
     private void retrieveStudents() {
@@ -119,8 +117,8 @@ public class Controller implements AlertDialogConstants {
     @FXML
     public void searchByNameAction() {
         try {
-            String name = searchByNameField.getText();
-            searchByGroupNameField.clear();
+            String name = searchByNameField.getEditor().getText();
+            searchByGroupNameField.getEditor().clear();
             getStudentsByName(name);
             getGroupByName(name);
         } catch (SQLException e) {
@@ -150,8 +148,8 @@ public class Controller implements AlertDialogConstants {
     @FXML
     public void searchByGroupAction() {
         try {
-            String group = searchByGroupNameField.getText();
-            searchByNameField.clear();
+            String group = searchByGroupNameField.getEditor().getText();
+            searchByNameField.getEditor().clear();
             usersDataGroups.clear();
             usersDataStudents.clear();
             DBConnector.getInstance().groupNameQuery(usersDataGroups, group);
@@ -175,8 +173,8 @@ public class Controller implements AlertDialogConstants {
             usersDataGroups.clear();
             usersDataStudents.clear();
             DBConnector.getInstance().groupQuery(usersDataGroups);
-            searchByGroupNameField.clear();
-            searchByNameField.clear();
+            searchByGroupNameField.getEditor().clear();
+            searchByNameField.getEditor().clear();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

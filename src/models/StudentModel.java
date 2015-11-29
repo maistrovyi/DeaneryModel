@@ -12,6 +12,7 @@ public class StudentModel {
 
     private String studentSex;
 
+
     public String getStudentSex() {
         return studentSex;
     }
