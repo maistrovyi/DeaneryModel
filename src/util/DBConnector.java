@@ -3,7 +3,6 @@ package util;
 import javafx.collections.ObservableList;
 import models.GroupModel;
 import models.StudentModel;
-
 import java.sql.*;
 
 public class DBConnector {
