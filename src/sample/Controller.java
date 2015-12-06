@@ -60,7 +60,6 @@ public class Controller implements AlertDialogConstants {
     @FXML
     private TableColumn<GroupModel, Integer> villageElderId = new TableColumn();
 
-
     @FXML
     private TableView<StudentModel> studentsTable;
     @FXML
