@@ -16,7 +16,7 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
     public DoubleClickEditGroupTable(TableView<GroupModel> groupsTable, DBUpdatable listener) {
         this.groupsTable = groupsTable;
         dbUpdatable = listener;
-        
+
     }
 
     public interface DBUpdatable {
