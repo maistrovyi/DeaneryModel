@@ -20,6 +20,8 @@ public enum DBQueriesType {
 
     SELECT_GROUPS_INFO_BY_GROUP_NAME("SELECT * FROM groups WHERE groupName = \""),
 
+//    UPDATE_GROUPS_INFO_BY_GROUP_ID(),
+
     SELECT_ELDERS_INFO("SELECT studentName\n" +
             "FROM students\n" +
             "WHERE studentId >= 4 AND studentId <= 5");

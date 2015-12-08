@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import models.GroupModel;
 import models.StudentModel;
 import util.DBConnector;
+import util.DoubleClickEditGroupTable;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -80,9 +81,14 @@ public class Controller implements AlertDialogConstants {
     public ComboBox searchByGroupNameField;
 
     public void fillingComboBoxFields() throws SQLException, ClassNotFoundException {
+        dataElders.clear();
+        dataGroups.clear();
+
         DBConnector.getInstance().namesOfGroupsQuery(dataGroups);
         DBConnector.getInstance().namesOfEldersQuery(dataElders);
 
+        searchByGroupNameField.getItems().clear();
+        searchByNameField.getItems().clear();
         searchByNameField.getItems().addAll(dataElders);
         searchByGroupNameField.getItems().addAll(dataGroups);
     }
@@ -105,6 +111,22 @@ public class Controller implements AlertDialogConstants {
             retrieveStudents();
         });
         groupsTable.setItems(usersDataGroups);
+
+        groupsTable.setEditable(true);
+        // selects cell only, not the whole row
+        groupsTable.setOnMouseClicked(new DoubleClickEditGroupTable(groupsTable, new DoubleClickEditGroupTable.DBUpdatable() {
+            @Override
+            public void onGroupDBUpdated() {
+                try {
+                    fillingComboBoxFields();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }));
+
     }
 
     private void retrieveStudents() {
