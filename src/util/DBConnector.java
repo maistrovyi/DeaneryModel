@@ -93,7 +93,8 @@ public class DBConnector {
         return groupModel;
     }
 
-    public void studentsQuery(ObservableList<StudentModel> dataContainerStudents, int groupId) throws SQLException, ClassNotFoundException {
+    public void studentsQuery(ObservableList<StudentModel> dataContainerStudents, int groupId)
+            throws SQLException, ClassNotFoundException {
         ResultSet resultStudents = getResultSet(DBQueriesType.SELECT_STUDENTS_INFO, String.valueOf(groupId), null);
 
         while (resultStudents.next()) {
@@ -101,7 +102,8 @@ public class DBConnector {
         }
     }
 
-    public void studentsOfGroupByVillageElderNameQuery(ObservableList<StudentModel> dataContainerStudents, String name) throws SQLException {
+    public void studentsOfGroupByVillageElderNameQuery(ObservableList<StudentModel> dataContainerStudents, String name)
+            throws SQLException {
         ResultSet resultVillageElder = getResultSet(DBQueriesType.SELECT_STUDENTS_INFO_BY_ELDER, String.valueOf(name), "\"))");
 
         while (resultVillageElder.next()) {
@@ -142,7 +144,9 @@ public class DBConnector {
     public void updateGroupModel(GroupModel rowModel) {
         try {
             Statement statementGroups = connection.createStatement();
-            statementGroups.executeUpdate("UPDATE groups SET groupName ='" + rowModel.getGroupName() + "', groupYearGraduate ='" + rowModel.getGroupYearGraduate() + "', villageElderId ='" + rowModel.getVillageElderId() + "' WHERE groupId ='" + rowModel.getGroupId() + "'");
+            statementGroups.executeUpdate("UPDATE groups SET groupName ='" + rowModel.getGroupName() +
+                    "', groupYearGraduate ='" + rowModel.getGroupYearGraduate() + "', villageElderId ='"
+                    + rowModel.getVillageElderId() + "' WHERE groupId ='" + rowModel.getGroupId() + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -151,7 +155,10 @@ public class DBConnector {
     public void updateStudentModel(StudentModel rowModel) {
         try {
             Statement statementGroups = connection.createStatement();
-            statementGroups.executeUpdate("UPDATE students SET studentName ='" + rowModel.getStudentName() + "', numberOfGradebook ='" + rowModel.getNumberOfGradebook() + "', studentGroup ='" + rowModel.getStudentGroup() + "', studentSex ='" + rowModel.getStudentSex() + "' WHERE studentId ='" + rowModel.getStudentId() + "'");
+            statementGroups.executeUpdate("UPDATE students SET studentName ='" + rowModel.getStudentName()
+                    + "', numberOfGradebook ='" + rowModel.getNumberOfGradebook() + "', studentGroup ='"
+                    + rowModel.getStudentGroup() + "', studentSex ='" + rowModel.getStudentSex()
+                    + "' WHERE studentId ='" + rowModel.getStudentId() + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }

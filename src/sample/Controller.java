@@ -32,7 +32,7 @@ public class Controller implements AlertDialogConstants {
 
     @FXML
     public void helpAction() {
-        showDialog(Alert.AlertType.INFORMATION, "Information Dialog", "DataBaseProject ver 1.4 editable", "Author maystrovoy");
+        showDialog(Alert.AlertType.INFORMATION, "Information Dialog", "DataBaseProject ver 1.5", "Author maystrovoy");
     }
 
     public static Optional<ButtonType> showDialog(Alert.AlertType information, String title, String headerText, String contentText) {
