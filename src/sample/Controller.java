@@ -20,7 +20,7 @@ public class Controller implements AlertDialogConstants {
 
     @FXML
     public void closeAction() {
-        Optional<ButtonType> result = showDialog(Alert.AlertType.CONFIRMATION, AlertDialogConstants.alertConfirmation,"Confirmation Dialog","Exit?" );
+        Optional<ButtonType> result = showDialog(Alert.AlertType.CONFIRMATION, AlertDialogConstants.alertConfirmation,"Do you want to close me?","Really?" );
         if (result.get() == ButtonType.OK) {
             DBConnector.getInstance().closeConnection();
             System.exit(0);
@@ -30,7 +30,7 @@ public class Controller implements AlertDialogConstants {
 
     @FXML
     public void helpAction() {
-        showDialog(Alert.AlertType.INFORMATION, "Information Dialog", "Data Base Project ver 1.2", "Author maystrovoy");
+        showDialog(Alert.AlertType.INFORMATION, "Information Dialog", "DataBaseProject ver 1.4 editable", "Author maystrovoy");
     }
 
     public static Optional<ButtonType> showDialog(Alert.AlertType information, String title, String headerText, String contentText) {
