@@ -20,7 +20,6 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
 
     public interface DBUpdatable {
         void onGroupDBUpdated();
-//        void onStudentDBUpdated();
     }
 
     DBUpdatable dbUpdatable;
@@ -30,9 +29,7 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
         @SuppressWarnings("rawtypes")
         TablePosition pos = groupsTable.getSelectionModel().getSelectedCells().get(0);
         if (click.getClickCount() == 2) {
-
             groupsTable.getSelectionModel().setCellSelectionEnabled(true);
-
             if (pos.getColumn() == 1) {
                 try {
                     TableColumn<GroupModel, String> firstNameCol = pos.getTableColumn();
@@ -67,11 +64,11 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                     firstNameCol.setOnEditCommit(
                             new EventHandler<TableColumn.CellEditEvent<GroupModel, Integer>>() {
                                 @Override
-                                public void handle(TableColumn.CellEditEvent<GroupModel, Integer> editEvent) {
-                                    int row = editEvent.getTablePosition().getRow();
-                                    int column = editEvent.getTablePosition().getColumn();
-                                    GroupModel rowModel = ((GroupModel) editEvent.getTableView().getItems().get(row));
-                                    Integer rowNewValue = editEvent.getNewValue().intValue();
+                                public void handle(TableColumn.CellEditEvent<GroupModel, Integer> tt) {
+                                    int row = tt.getTablePosition().getRow();
+                                    int column = tt.getTablePosition().getColumn();
+                                    GroupModel rowModel = ((GroupModel) tt.getTableView().getItems().get(row));
+                                    Integer rowNewValue = tt.getNewValue().intValue();
                                     switch (column) {
                                         case 0:
                                             rowModel.setGroupId(rowNewValue);

@@ -18,11 +18,6 @@
                         <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeAction" text="Close" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <MenuItem disable="true" mnemonicParsing="false" text="Delete" />
-                    </items>
-                </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
                         <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" onAction="#helpAction" text="About" />
@@ -131,7 +126,7 @@
                         <Insets bottom="3.0" top="4.0" />
                     </HBox.margin>
                 </Button>
-            <Button fx:id="addButton" alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="92.0" text="Add">
+            <Button fx:id="addButton" alignment="CENTER" disable="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="92.0" text="Add">
                <effect>
                   <Blend />
                </effect>
