@@ -1,6 +1,7 @@
 package sample;
 
 import interfaces.AlertDialogConstants;
+import interfaces.DBUpdatable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,6 +12,8 @@ import javafx.stage.Stage;
 import models.GroupModel;
 import models.StudentModel;
 import util.DBConnector;
+import util.DoubleClickEditGroupTable;
+import util.DoubleClickEditStudentsTable;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -19,7 +22,7 @@ public class Controller implements AlertDialogConstants {
 
     @FXML
     public void closeAction() {
-        Optional<ButtonType> result = showDialog(Alert.AlertType.CONFIRMATION, AlertDialogConstants.alertConfirmation,"Confirmation Dialog","Exit?" );
+        Optional<ButtonType> result = showDialog(Alert.AlertType.CONFIRMATION, AlertDialogConstants.alertConfirmation,"Do you want to close me?","Really?" );
         if (result.get() == ButtonType.OK) {
             DBConnector.getInstance().closeConnection();
             System.exit(0);
@@ -29,7 +32,7 @@ public class Controller implements AlertDialogConstants {
 
     @FXML
     public void helpAction() {
-        showDialog(Alert.AlertType.INFORMATION, "Information Dialog", "Data Base Project ver 1.2", "Author maystrovoy");
+        showDialog(Alert.AlertType.INFORMATION, "Information Dialog", "DataBaseProject ver 1.5", "Author maystrovoy");
     }
 
     public static Optional<ButtonType> showDialog(Alert.AlertType information, String title, String headerText, String contentText) {
@@ -79,8 +82,14 @@ public class Controller implements AlertDialogConstants {
     public ComboBox searchByGroupNameField;
 
     public void fillingComboBoxFields() throws SQLException, ClassNotFoundException {
+        dataElders.clear();
+        dataGroups.clear();
+
         DBConnector.getInstance().namesOfGroupsQuery(dataGroups);
         DBConnector.getInstance().namesOfEldersQuery(dataElders);
+
+        searchByGroupNameField.getItems().clear();
+        searchByNameField.getItems().clear();
 
         searchByNameField.getItems().addAll(dataElders);
         searchByGroupNameField.getItems().addAll(dataGroups);
@@ -104,6 +113,35 @@ public class Controller implements AlertDialogConstants {
             retrieveStudents();
         });
         groupsTable.setItems(usersDataGroups);
+
+        studentsTable.setEditable(true);
+        studentsTable.setOnMouseClicked(new DoubleClickEditStudentsTable(studentsTable, new DBUpdatable() {
+            @Override
+            public void onDBUpdated() {
+                try {
+                    fillingComboBoxFields();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }));
+
+        groupsTable.setEditable(true);
+        groupsTable.setOnMouseClicked(new DoubleClickEditGroupTable(groupsTable, new DBUpdatable() {
+            @Override
+            public void onDBUpdated() {
+                try {
+                    fillingComboBoxFields();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }));
+
     }
 
     private void retrieveStudents() {
