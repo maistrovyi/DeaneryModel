@@ -1,6 +1,7 @@
 package sample;
 
 import interfaces.AlertDialogConstants;
+import interfaces.DBUpdatable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import models.GroupModel;
 import models.StudentModel;
 import util.DBConnector;
 import util.DoubleClickEditGroupTable;
+import util.DoubleClickEditStudentsTable;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -89,6 +91,7 @@ public class Controller implements AlertDialogConstants {
 
         searchByGroupNameField.getItems().clear();
         searchByNameField.getItems().clear();
+
         searchByNameField.getItems().addAll(dataElders);
         searchByGroupNameField.getItems().addAll(dataGroups);
     }
@@ -112,11 +115,24 @@ public class Controller implements AlertDialogConstants {
         });
         groupsTable.setItems(usersDataGroups);
 
-        groupsTable.setEditable(true);
-        // selects cell only, not the whole row
-        groupsTable.setOnMouseClicked(new DoubleClickEditGroupTable(groupsTable, new DoubleClickEditGroupTable.DBUpdatable() {
+        studentsTable.setEditable(true);
+        studentsTable.setOnMouseClicked(new DoubleClickEditStudentsTable(studentsTable, new DBUpdatable() {
             @Override
-            public void onGroupDBUpdated() {
+            public void onDBUpdated() {
+                try {
+                    fillingComboBoxFields();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }));
+
+        groupsTable.setEditable(true);
+        groupsTable.setOnMouseClicked(new DoubleClickEditGroupTable(groupsTable, new DBUpdatable() {
+            @Override
+            public void onDBUpdated() {
                 try {
                     fillingComboBoxFields();
                 } catch (SQLException e) {

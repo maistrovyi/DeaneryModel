@@ -139,24 +139,19 @@ public class DBConnector {
         return studentModel;
     }
 
-    public void updateModel(GroupModel rowModel) {
+    public void updateGroupModel(GroupModel rowModel) {
         try {
-
-
-//            String rGanTz = "UPDATE groups SET groupName = ?, groupYearGraduate = ?, villageElderId = ? " +
-//                    "WHERE groupId = ?";
-//
-//            PreparedStatement ps = connection.prepareStatement(rGanTz);
-//            ps.setString(1, rowModel.getGroupName());
-//            ps.setInt(2, rowModel.getGroupYearGraduate());
-//            ps.setInt(3, rowModel.getVillageElderId());
-//            ps.setInt(4, rowModel.getGroupId());
-//
-//            ps.executeUpdate();
             Statement statementGroups = connection.createStatement();
             statementGroups.executeUpdate("UPDATE groups SET groupName ='" + rowModel.getGroupName() + "', groupYearGraduate ='" + rowModel.getGroupYearGraduate() + "', villageElderId ='" + rowModel.getVillageElderId() + "' WHERE groupId ='" + rowModel.getGroupId() + "'");
-//            ResultSet resultGroupName = getResultSet(DBQueriesType.UPDATE_GROUPS_INFO_BY_GROUP_ID, String.valueOf(rowModel.getGroupId()), "");
-//            ResultSet resultGroupName = getResultSet(DBQueriesType.UPDATE_GROUPS_INFO_BY_GROUP_ID, String.valueOf(rowModel.getGroupId()), "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateStudentModel(StudentModel rowModel) {
+        try {
+            Statement statementGroups = connection.createStatement();
+            statementGroups.executeUpdate("UPDATE students SET studentName ='" + rowModel.getStudentName() + "', numberOfGradebook ='" + rowModel.getNumberOfGradebook() + "', studentGroup ='" + rowModel.getStudentGroup() + "', studentSex ='" + rowModel.getStudentSex() + "' WHERE studentId ='" + rowModel.getStudentId() + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }

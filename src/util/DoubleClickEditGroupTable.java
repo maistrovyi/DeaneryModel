@@ -1,5 +1,6 @@
 package util;
 
+import interfaces.DBUpdatable;
 import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
@@ -11,18 +12,13 @@ import models.GroupModel;
 
 public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
 
-    TableView<GroupModel> groupsTable;
+    private TableView<GroupModel> groupsTable;
+    private DBUpdatable dbUpdatable;
 
     public DoubleClickEditGroupTable(TableView<GroupModel> groupsTable, DBUpdatable listener) {
         this.groupsTable = groupsTable;
         dbUpdatable = listener;
     }
-
-    public interface DBUpdatable {
-        void onGroupDBUpdated();
-    }
-
-    DBUpdatable dbUpdatable;
 
     @Override
     public void handle(MouseEvent click) {
@@ -38,9 +34,9 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                             (TableColumn.CellEditEvent<GroupModel, String> t) -> {
                                 GroupModel model = ((GroupModel) t.getTableView().getItems().get(t.getTablePosition().getRow()));
                                 model.setGroupName(t.getNewValue());
-                                DBConnector.getInstance().updateModel(model);
+                                DBConnector.getInstance().updateGroupModel(model);
 
-                                dbUpdatable.onGroupDBUpdated();
+                                dbUpdatable.onDBUpdated();
                             });
                 } catch (ClassCastException exc) {
                     System.out.println("ClassCastException ");
@@ -70,9 +66,6 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                                     GroupModel rowModel = ((GroupModel) tt.getTableView().getItems().get(row));
                                     Integer rowNewValue = tt.getNewValue().intValue();
                                     switch (column) {
-                                        case 0:
-                                            rowModel.setGroupId(rowNewValue);
-                                            break;
                                         case 2:
                                             rowModel.setGroupYearGraduate(rowNewValue);
                                             break;
@@ -80,9 +73,9 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                                             rowModel.setVillageElderId(rowNewValue);
                                             break;
                                     }
-                                    DBConnector.getInstance().updateModel(rowModel);
+                                    DBConnector.getInstance().updateGroupModel(rowModel);
 
-                                    dbUpdatable.onGroupDBUpdated();
+                                    dbUpdatable.onDBUpdated();
                                 }
                             });
                 } catch (Exception e) {
