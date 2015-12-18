@@ -22,7 +22,8 @@ public class Controller implements AlertDialogConstants {
 
     @FXML
     public void closeAction() {
-        Optional<ButtonType> result = showDialog(Alert.AlertType.CONFIRMATION, AlertDialogConstants.alertConfirmation,"Do you want to close me?","Really?" );
+        Optional<ButtonType> result = showDialog(Alert.AlertType.CONFIRMATION, AlertDialogConstants.alertConfirmation,
+                "Do you want to close me?","Really?" );
         if (result.get() == ButtonType.OK) {
             DBConnector.getInstance().closeConnection();
             System.exit(0);
@@ -35,7 +36,8 @@ public class Controller implements AlertDialogConstants {
         showDialog(Alert.AlertType.INFORMATION, "Information Dialog", "DataBaseProject ver 1.5", "Author maystrovoy");
     }
 
-    public static Optional<ButtonType> showDialog(Alert.AlertType information, String title, String headerText, String contentText) {
+    public static Optional<ButtonType> showDialog(Alert.AlertType information, String title, String headerText,
+                                                  String contentText) {
         Alert alert = new Alert(information);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -178,7 +180,8 @@ public class Controller implements AlertDialogConstants {
         usersDataStudents.clear();
         DBConnector.getInstance().studentsOfGroupByVillageElderNameQuery(usersDataStudents, name);
         if (usersDataStudents.isEmpty()) {
-            Optional<ButtonType> result = showDialog(Alert.AlertType.ERROR, AlertDialogConstants.alertError, "Description:", "The elder " + name + " is not found! \nPlease, input correct name!");
+            Optional<ButtonType> result = showDialog(Alert.AlertType.ERROR, AlertDialogConstants.alertError,
+                    "Description:", "The elder " + name + " is not found! \nPlease, input correct name!");
             if (result.get() == ButtonType.OK) {
                 searchByNameField.requestFocus();
             }
@@ -205,7 +208,8 @@ public class Controller implements AlertDialogConstants {
             if (!usersDataGroups.isEmpty()) {
                 studentsRequire(usersDataGroups.get(0).getGroupId());
             }else{
-                Optional<ButtonType> result = showDialog(Alert.AlertType.ERROR, AlertDialogConstants.alertError, "Description:", "The group " + group + " is not found! \nPlease, input correct group!");
+                Optional<ButtonType> result = showDialog(Alert.AlertType.ERROR, AlertDialogConstants.alertError,
+                        "Description:", "The group " + group + " is not found! \nPlease, input correct group!");
                 if (result.get() == ButtonType.OK) {
                     searchByGroupNameField.requestFocus();
                 }

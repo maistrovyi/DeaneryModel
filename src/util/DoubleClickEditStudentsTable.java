@@ -1,15 +1,18 @@
 package util;
 
 
+import interfaces.AlertDialogConstants;
 import interfaces.DBUpdatable;
 import javafx.event.EventHandler;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 import models.StudentModel;
+
+import java.util.Optional;
+
+import static sample.Controller.showDialog;
 
 public class DoubleClickEditStudentsTable implements EventHandler<MouseEvent> {
 
@@ -19,6 +22,11 @@ public class DoubleClickEditStudentsTable implements EventHandler<MouseEvent> {
     public DoubleClickEditStudentsTable(TableView<StudentModel> studentsTable, DBUpdatable listener) {
         this.studentsTable = studentsTable;
         dbUpdatable = listener;
+    }
+
+    private void emptyCheckingError() {
+        Optional<ButtonType> result = showDialog(Alert.AlertType.ERROR, AlertDialogConstants.alertError,
+                "Description:", "The value can't be empty! \nPlease, input correct value!");
     }
 
     @Override
@@ -37,24 +45,30 @@ public class DoubleClickEditStudentsTable implements EventHandler<MouseEvent> {
                             int column = event.getTablePosition().getColumn();
                             StudentModel rowModel = ((StudentModel) event.getTableView().getItems().get(row));
                             String rowNewValue = event.getNewValue().toString();
-                            switch (column) {
-                                case 1:
-                                    rowModel.setStudentName(rowNewValue);
-                                    break;
-                                case 4:
-                                    rowModel.setStudentSex(rowNewValue);
-                                    break;
-                            }
-                            DBConnector.getInstance().updateStudentModel(rowModel);
+                            if (event.getNewValue().isEmpty()) {
+                                emptyCheckingError();
+                            } else {
+                                switch (column) {
+                                    case 1:
+                                        rowModel.setStudentName(rowNewValue);
+                                        break;
+                                    case 4:
+                                        rowModel.setStudentSex(rowNewValue);
+                                        break;
+                                }
+                                DBConnector.getInstance().updateStudentModel(rowModel);
 
-                            dbUpdatable.onDBUpdated();
+                                dbUpdatable.onDBUpdated();
+                            }
                         }
                     });
                 } catch (ClassCastException exc) {
-                    System.out.println("ClassCastException ");
+                    System.out.println("ClassCastException");
                 }
             } else if (pos.getColumn() == 2 || pos.getColumn() == 3) {
                 TableColumn<StudentModel, Integer> firstNameCol = pos.getTableColumn();
+
+                try {
                 firstNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
 
                     @Override
@@ -68,6 +82,11 @@ public class DoubleClickEditStudentsTable implements EventHandler<MouseEvent> {
                     }
 
                 }));
+
+                } catch (NumberFormatException e) {
+                    emptyCheckingError();
+                }
+
                 try {
                     firstNameCol.setOnEditCommit(
                             new EventHandler<TableColumn.CellEditEvent<StudentModel, Integer>>() {
@@ -77,17 +96,21 @@ public class DoubleClickEditStudentsTable implements EventHandler<MouseEvent> {
                                     int column = tt.getTablePosition().getColumn();
                                     StudentModel rowModel = ((StudentModel) tt.getTableView().getItems().get(row));
                                     Integer rowNewValue = tt.getNewValue().intValue();
-                                    switch (column) {
-                                        case 2:
-                                            rowModel.setStudentGroup(rowNewValue);
-                                            break;
-                                        case 3:
-                                            rowModel.setNumberOfGradebook(rowNewValue);
-                                            break;
-                                    }
-                                    DBConnector.getInstance().updateStudentModel(rowModel);
+                                    if (tt.getNewValue() == null) {
+                                        emptyCheckingError();
+                                    } else {
+                                        switch (column) {
+                                            case 2:
+                                                rowModel.setStudentGroup(rowNewValue);
+                                                break;
+                                            case 3:
+                                                rowModel.setNumberOfGradebook(rowNewValue);
+                                                break;
+                                        }
+                                        DBConnector.getInstance().updateStudentModel(rowModel);
 
-                                    dbUpdatable.onDBUpdated();
+                                        dbUpdatable.onDBUpdated();
+                                    }
                                 }
                             });
                 } catch (Exception e) {

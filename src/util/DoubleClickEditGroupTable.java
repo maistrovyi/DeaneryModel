@@ -1,14 +1,17 @@
 package util;
 
+import interfaces.AlertDialogConstants;
 import interfaces.DBUpdatable;
 import javafx.event.EventHandler;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 import models.GroupModel;
+
+import java.util.Optional;
+
+import static sample.Controller.showDialog;
 
 public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
 
@@ -18,6 +21,11 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
     public DoubleClickEditGroupTable(TableView<GroupModel> groupsTable, DBUpdatable listener) {
         this.groupsTable = groupsTable;
         dbUpdatable = listener;
+    }
+
+    private void emptyCheckingError() {
+            Optional<ButtonType> result = showDialog(Alert.AlertType.ERROR, AlertDialogConstants.alertError,
+                    "Description:", "The value can't be empty! \nPlease, input correct value!");
     }
 
     @Override
@@ -32,11 +40,16 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                     firstNameCol.setCellFactory(TextFieldTableCell.<GroupModel>forTableColumn());
                     firstNameCol.setOnEditCommit(
                             (TableColumn.CellEditEvent<GroupModel, String> t) -> {
-                                GroupModel model = ((GroupModel) t.getTableView().getItems().get(t.getTablePosition().getRow()));
-                                model.setGroupName(t.getNewValue());
-                                DBConnector.getInstance().updateGroupModel(model);
+                                GroupModel model = ((GroupModel) t.getTableView().getItems().get(t.getTablePosition().
+                                        getRow()));
+                                if (t.getNewValue().isEmpty()) {
+                                    emptyCheckingError();
+                                } else {
+                                    model.setGroupName(t.getNewValue());
+                                    DBConnector.getInstance().updateGroupModel(model);
 
-                                dbUpdatable.onDBUpdated();
+                                    dbUpdatable.onDBUpdated();
+                                }
                             });
                 } catch (ClassCastException exc) {
                     System.out.println("ClassCastException ");
@@ -45,16 +58,15 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                 TableColumn<GroupModel, Integer> firstNameCol = pos.getTableColumn();
                 firstNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
 
-                    @Override
-                    public String toString(Integer object) {
-                        return object.toString();
-                    }
+                        @Override
+                        public String toString(Integer object) {
+                            return object.toString();
+                        }
 
-                    @Override
-                    public Integer fromString(String string) {
-                        return Integer.parseInt(string);
-                    }
-
+                        @Override
+                        public Integer fromString(String string) {
+                            return Integer.parseInt(string);
+                        }
                 }));
                 try {
                     firstNameCol.setOnEditCommit(
@@ -65,17 +77,21 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                                     int column = tt.getTablePosition().getColumn();
                                     GroupModel rowModel = ((GroupModel) tt.getTableView().getItems().get(row));
                                     Integer rowNewValue = tt.getNewValue().intValue();
-                                    switch (column) {
-                                        case 2:
-                                            rowModel.setGroupYearGraduate(rowNewValue);
-                                            break;
-                                        case 3:
-                                            rowModel.setVillageElderId(rowNewValue);
-                                            break;
-                                    }
-                                    DBConnector.getInstance().updateGroupModel(rowModel);
+                                    if (tt.getNewValue().equals(null)) {
+                                        emptyCheckingError();
+                                    } else {
+                                        switch (column) {
+                                            case 2:
+                                                rowModel.setGroupYearGraduate(rowNewValue);
+                                                break;
+                                            case 3:
+                                                rowModel.setVillageElderId(rowNewValue);
+                                                break;
+                                        }
+                                        DBConnector.getInstance().updateGroupModel(rowModel);
 
-                                    dbUpdatable.onDBUpdated();
+                                        dbUpdatable.onDBUpdated();
+                                    }
                                 }
                             });
                 } catch (Exception e) {

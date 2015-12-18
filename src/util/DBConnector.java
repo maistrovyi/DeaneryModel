@@ -64,7 +64,8 @@ public class DBConnector {
         }
     }
 
-    public void namesOfGroupsQuery(ObservableList<String> dataGroupComboBox)throws SQLException, ClassNotFoundException {
+    public void namesOfGroupsQuery(ObservableList<String> dataGroupComboBox)throws SQLException,
+            ClassNotFoundException {
         ResultSet resultGroups = getResultSet(DBQueriesType.SELECT_GROUP_NAMES);
 
         while (resultGroups.next()) {
@@ -72,7 +73,8 @@ public class DBConnector {
         }
     }
 
-    public void namesOfEldersQuery(ObservableList<String> dataElderComboBox) throws SQLException, ClassNotFoundException {
+    public void namesOfEldersQuery(ObservableList<String> dataElderComboBox) throws SQLException,
+            ClassNotFoundException {
         ResultSet resultElder = getResultSet(DBQueriesType.SELECT_ELDERS_INFO);
 
         while (resultElder.next()) {
@@ -104,14 +106,16 @@ public class DBConnector {
 
     public void studentsOfGroupByVillageElderNameQuery(ObservableList<StudentModel> dataContainerStudents, String name)
             throws SQLException {
-        ResultSet resultVillageElder = getResultSet(DBQueriesType.SELECT_STUDENTS_INFO_BY_ELDER, String.valueOf(name), "\"))");
+        ResultSet resultVillageElder = getResultSet(DBQueriesType.SELECT_STUDENTS_INFO_BY_ELDER,
+                String.valueOf(name), "\"))");
 
         while (resultVillageElder.next()) {
             dataContainerStudents.add(queryResultToStudent(resultVillageElder));
         }
     }
 
-    public void getGroupIdByVillageElderName(ObservableList<GroupModel> dataContainerGroups, String name) throws SQLException {
+    public void getGroupIdByVillageElderName(ObservableList<GroupModel> dataContainerGroups, String name)
+            throws SQLException {
         ResultSet resultVillageElder = getResultSet(DBQueriesType.SELECT_GROUPS_INFO_BY_ELDER, name, "\")");
 
         while (resultVillageElder.next()) {
