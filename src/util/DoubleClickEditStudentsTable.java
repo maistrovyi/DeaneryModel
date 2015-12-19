@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import javafx.util.StringConverter;
 import models.StudentModel;
 
 import java.util.Optional;
@@ -67,26 +66,7 @@ public class DoubleClickEditStudentsTable implements EventHandler<MouseEvent> {
                 }
             } else if (pos.getColumn() == 2 || pos.getColumn() == 3) {
                 TableColumn<StudentModel, Integer> firstNameCol = pos.getTableColumn();
-
-                try {
-                firstNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
-
-                    @Override
-                    public String toString(Integer object) {
-                        return object.toString();
-                    }
-
-                    @Override
-                    public Integer fromString(String string) {
-                        return Integer.parseInt(string);
-                    }
-
-                }));
-
-                } catch (NumberFormatException e) {
-                    emptyCheckingError();
-                }
-
+                firstNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new EditStringConverter()));
                 try {
                     firstNameCol.setOnEditCommit(
                             new EventHandler<TableColumn.CellEditEvent<StudentModel, Integer>>() {
@@ -96,7 +76,7 @@ public class DoubleClickEditStudentsTable implements EventHandler<MouseEvent> {
                                     int column = tt.getTablePosition().getColumn();
                                     StudentModel rowModel = ((StudentModel) tt.getTableView().getItems().get(row));
                                     Integer rowNewValue = tt.getNewValue().intValue();
-                                    if (tt.getNewValue() == null) {
+                                    if (tt.getNewValue() == 0) {
                                         emptyCheckingError();
                                     } else {
                                         switch (column) {

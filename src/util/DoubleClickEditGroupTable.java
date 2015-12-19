@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import javafx.util.StringConverter;
 import models.GroupModel;
 
 import java.util.Optional;
@@ -56,18 +55,7 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                 }
             } else if (pos.getColumn() == 2 || pos.getColumn() == 3) {
                 TableColumn<GroupModel, Integer> firstNameCol = pos.getTableColumn();
-                firstNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
-
-                        @Override
-                        public String toString(Integer object) {
-                            return object.toString();
-                        }
-
-                        @Override
-                        public Integer fromString(String string) {
-                            return Integer.parseInt(string);
-                        }
-                }));
+                firstNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new EditStringConverter()));
                 try {
                     firstNameCol.setOnEditCommit(
                             new EventHandler<TableColumn.CellEditEvent<GroupModel, Integer>>() {
@@ -77,7 +65,7 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                                     int column = tt.getTablePosition().getColumn();
                                     GroupModel rowModel = ((GroupModel) tt.getTableView().getItems().get(row));
                                     Integer rowNewValue = tt.getNewValue().intValue();
-                                    if (tt.getNewValue().equals(null)) {
+                                    if (tt.getNewValue() == 0) {
                                         emptyCheckingError();
                                     } else {
                                         switch (column) {
