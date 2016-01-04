@@ -27,6 +27,11 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                     "Description:", "The value can't be empty! \nPlease, input correct value!");
     }
 
+    private void invalidDigitValue(String value) {
+        Optional<ButtonType> result = showDialog(Alert.AlertType.ERROR, AlertDialogConstants.alertError,
+                "Description", "The value: " + value + " is invalid! \nPlease, input correct value!");
+    }
+
     @Override
     public void handle(MouseEvent click) {
         @SuppressWarnings("rawtypes")
@@ -65,9 +70,13 @@ public class DoubleClickEditGroupTable implements EventHandler<MouseEvent> {
                                     int column = tt.getTablePosition().getColumn();
                                     GroupModel rowModel = ((GroupModel) tt.getTableView().getItems().get(row));
                                     Integer rowNewValue = tt.getNewValue().intValue();
-                                    if (tt.getNewValue() == 0) {
+                                    if (tt.getNewValue() == 0 ) {
                                         emptyCheckingError();
-                                    } else {
+                                    } else if ((tt.getNewValue().getClass().isPrimitive())) {
+                                        // TODO: 1/4/2016
+                                        invalidDigitValue(tt.getNewValue().toString());
+                                    }
+                                    else {
                                         switch (column) {
                                             case 2:
                                                 rowModel.setGroupYearGraduate(rowNewValue);
