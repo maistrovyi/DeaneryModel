@@ -1,0 +1,5 @@
+<root>
+  <item name='javafx.util.StringConverter'>
+    <annotation name='java.lang.annotation.Deprecated'/>
+  </item>
+</root>
